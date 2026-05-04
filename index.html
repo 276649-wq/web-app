@@ -1,123 +1,759 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Oasis Health Tracker</title>
-    <meta name="description" content="A premium tracker for hydration, supplements, and health progress.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="stylesheet" href="style.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="apple-touch-icon" href="favicon.png">
-    <meta name="apple-mobile-web-app-title" content="Oasis">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Oasis Health Tracker</title>
+  <meta name="description" content="Premium hydration and supplement tracker.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Oasis">
+  <meta name="theme-color" content="#060d1a">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="app">
 
-    <main id="app-container">
-        
-        <header>
-            <h1 class="logo-text">Oasis Health Tracker </h1>
-            <nav id="app-nav">
-                <button data-page="hydration-tracker" class="active"><i class="fa-solid fa-droplet"></i></button>
-                <button data-page="creatine-tracker"><i class="fa-solid fa-pills"></i></button>
-                <button data-page="history-page"><i class="fa-solid fa-chart-line"></i></button>
-            </nav>
-        </header>
+  <!-- HEADER -->
+  <header id="app-header">
+    <div class="hdr-left">
+      <span class="hdr-logo">💧</span>
+      <span class="hdr-title">Oasis</span>
+    </div>
+    <div class="hdr-right">
+      <div class="streak-badge" id="hdr-streak">
+        <i class="fa-solid fa-fire"></i><span id="hdr-streak-num">0</span>
+      </div>
+      <button id="notif-btn" class="hdr-icon-btn" title="Reminders">
+        <i class="fa-solid fa-bell" id="notif-icon"></i>
+      </button>
+      <button id="theme-btn" class="hdr-icon-btn" title="Toggle theme">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+      </button>
+    </div>
+  </header>
 
-        <div id="tracker-page-container">
-            
-            <section id="hydration-tracker" class="tracker-module">
-                
-                <div class="card primary-card">
-                    <h2 class="card-title">Daily Hydration Goal</h2>
-                    
-                    <div class="circular-progress-ring">
-                        <span id="liter-count">0.0 L / 3.7 L</span>
-                        <span class="percentage-text">0% Complete</span>
-                    </div>
+  <!-- PAGES -->
+  <main id="pages">
 
-                    <div class="goal-setting">
-                        <label for="hydration-goal-input">Target (Liters):</label>
-                        <input type="number" id="hydration-goal-input" min="0.1" step="0.1" value="3.7">
-                    </div>
-                </div>
+    <!-- ░░ PAGE: DASHBOARD ░░ -->
+    <section id="page-home" class="page active">
+      <div class="scroll-wrap">
 
-                <div class="card secondary-card log-card">
-                    <h3 class="card-title">Log Intake</h3>
-                    <div class="logging-buttons">
-                        <button data-amount="0.25">250 ml</button>
-                        <button data-amount="0.5">500 ml</button>
-                        <button data-amount="1.0">1.0 L</button>
-                    </div>
-                </div>
-                
-                <div class="card info-card">
-                    <p class="small-note"> Hydration Tip:  It's recommended to drink 3 to 4 liters of water daily to support creatine effectiveness and overall hydration per 5g.</p>
-                </div>
-            </section>
+        <div class="greeting-area">
+          <p id="greet-sub" class="label-muted"></p>
+          <h2 id="greet-main">Good morning!</h2>
+        </div>
 
-            <section id="creatine-tracker" class="tracker-module">
-                
-                <div class="card primary-card supplement-card">
-                    <h2 class="card-title">Creatine Monohydrate</h2>
-                    
-                    <div class="creatine-status-area">
-                        <button id="creatine-log-btn" class="cta-button">
-                            Log Creatine Serving (5g)
-                        </button>
-                        <p id="creatine-status-text" class="status-display">0 Serving(s) Logged (0g Total)</p>
-                    </div>
-                </div>
-                
-                <div class="card secondary-card dosage-card">
-                    <h3 class="card-title">Dosage Information</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Standard Dose:</span>
-                        <span class="detail-value">5 grams</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Maximum Dose:</span>
-                        <span class="detail-value">20 grams (4 Servings)</span>
-                    </div>
-                    <p class="small-note">Consult your physician before starting any new supplement regimen.</p>
-                </div>
-            </section>
+        <!-- Wellness Score -->
+        <div class="wellness-card">
+          <div class="ws-left">
+            <div class="ws-score-wrap">
+              <svg width="70" height="70" viewBox="0 0 70 70">
+                <circle cx="35" cy="35" r="28" class="ws-track"/>
+                <circle cx="35" cy="35" r="28" id="ws-ring" class="ws-fill" stroke-dasharray="175.93" stroke-dashoffset="175.93" transform="rotate(-90 35 35)"/>
+              </svg>
+              <span id="ws-score" class="ws-num">0</span>
+            </div>
+          </div>
+          <div class="ws-right">
+            <div class="ws-title">Wellness Score</div>
+            <div id="ws-grade" class="ws-grade">—</div>
+            <div id="ws-tip" class="ws-tip label-muted small">Log water &amp; creatine to build your score</div>
+          </div>
+        </div>
+        <!-- Wellness Breakdown -->
+        <div class="ws-breakdown" id="ws-breakdown">
+          <div class="ws-br-item" id="wsbr-hydration">
+            <span class="wsbr-icon">💧</span>
+            <div class="wsbr-bar-wrap"><div class="wsbr-bar" id="wsbr-bar-hydration"></div></div>
+            <span class="wsbr-pts" id="wsbr-pts-hydration">0/45</span>
+          </div>
+          <div class="ws-br-item" id="wsbr-creatine">
+            <span class="wsbr-icon">💊</span>
+            <div class="wsbr-bar-wrap"><div class="wsbr-bar wsbr-bar-purple" id="wsbr-bar-creatine"></div></div>
+            <span class="wsbr-pts" id="wsbr-pts-creatine">0/20</span>
+          </div>
+          <div class="ws-br-item" id="wsbr-streak">
+            <span class="wsbr-icon">🔥</span>
+            <div class="wsbr-bar-wrap"><div class="wsbr-bar wsbr-bar-orange" id="wsbr-bar-streak"></div></div>
+            <span class="wsbr-pts" id="wsbr-pts-streak">0/15</span>
+          </div>
+          <div class="ws-br-item" id="wsbr-workout">
+            <span class="wsbr-icon">💪</span>
+            <div class="wsbr-bar-wrap"><div class="wsbr-bar wsbr-bar-green" id="wsbr-bar-workout"></div></div>
+            <span class="wsbr-pts" id="wsbr-pts-workout">0/10</span>
+          </div>
+          <div class="ws-br-item" id="wsbr-avg">
+            <span class="wsbr-icon">📈</span>
+            <div class="wsbr-bar-wrap"><div class="wsbr-bar wsbr-bar-teal" id="wsbr-bar-avg"></div></div>
+            <span class="wsbr-pts" id="wsbr-pts-avg">0/10</span>
+          </div>
+        </div>
 
-            <section id="history-page" class="tracker-module">
-                
-                <div class="card primary-card stats-card">
-                    <h2 class="card-title">Your Performance</h2>
-                    
-                    <div class="overview-stats">
-                        <div class="stat-box">
-                            <span id="avg-liters" class="stat-value">--</span>
-                            <span class="stat-label">Avg. Daily Liters</span>
-                        </div>
-                        <div class="stat-box">
-                            <span id="creatine-consistency" class="stat-value">--</span>
-                            <span class="stat-label">Consistency</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card secondary-card history-list-card">
-                    <h3 class="card-title">Recent Activity</h3>
-                    <ul id="history-list">
-                        <li class="loading-message">Loading history...</li>
-                    </ul>
-                </div>
-            </section>
+        <!-- Today summary row -->
+        <div class="twin-cards">
+          <div class="twin-card water-twin" data-nav="page-water">
+            <div class="tc-top">
+              <span class="tc-emoji">💧</span>
+              <svg class="tc-ring" width="52" height="52" viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="21" class="tc-ring-bg"/>
+                <circle cx="26" cy="26" r="21" id="dash-ring"
+                  class="tc-ring-fill tc-ring-water"
+                  stroke-dasharray="131.95" stroke-dashoffset="131.95"
+                  transform="rotate(-90 26 26)"/>
+              </svg>
+            </div>
+            <span class="tc-val" id="dash-water-val">0.0 L</span>
+            <span class="tc-lbl">Hydration</span>
+            <div class="tc-pct" id="dash-water-pct">0% of goal</div>
+          </div>
+          <div class="twin-card creatine-twin" data-nav="page-supps">
+            <div class="tc-top">
+              <span class="tc-emoji">💊</span>
+              <div id="dash-supp-dot" class="supp-dot dot-idle"></div>
+            </div>
+            <span class="tc-val" id="dash-creatine-val">0 g</span>
+            <span class="tc-lbl">Creatine</span>
+            <div class="tc-pct" id="dash-creatine-pct">Not logged</div>
+          </div>
+        </div>
 
-        </div> 
-    </main>
+        <!-- Streak row -->
+        <div class="streak-row">
+          <div class="streak-box">
+            <div class="sb-num" id="sb-water">0</div>
+            <div class="sb-lbl">💧 Streak</div>
+          </div>
+          <div class="streak-box">
+            <div class="sb-num" id="sb-creatine">0</div>
+            <div class="sb-lbl">💊 Streak</div>
+          </div>
+          <div class="streak-box">
+            <div class="sb-num" id="sb-days">0</div>
+            <div class="sb-lbl">📅 Days</div>
+          </div>
+        </div>
 
-    <script src="scripts.js" defer></script>
+        <!-- Quick log -->
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">Quick Log</span>
+            <span class="label-muted" id="active-drink-label">💧 Water</span>
+          </div>
+          <div class="qgrid">
+            <button class="qbtn" data-amount="0.25" data-type="water">
+              <span class="qbtn-ico">🥛</span>
+              <span class="qbtn-name">Glass</span>
+              <span class="qbtn-amt">250 ml</span>
+            </button>
+            <button class="qbtn" data-amount="0.5" data-type="water">
+              <span class="qbtn-ico">🍶</span>
+              <span class="qbtn-name">Bottle</span>
+              <span class="qbtn-amt">500 ml</span>
+            </button>
+            <button class="qbtn" data-amount="1.0" data-type="water">
+              <span class="qbtn-ico">🫗</span>
+              <span class="qbtn-name">Large</span>
+              <span class="qbtn-amt">1.0 L</span>
+            </button>
+            <button class="qbtn qbtn-supp" id="dash-creatine-btn">
+              <span class="qbtn-ico">💊</span>
+              <span class="qbtn-name">Creatine</span>
+              <span class="qbtn-amt">5 g</span>
+            </button>
+          </div>
+          <!-- Workout toggle -->
+          <div class="workout-row">
+            <div class="workout-left">
+              <i class="fa-solid fa-dumbbell workout-icon"></i>
+              <div>
+                <span class="workout-label">Workout Day</span>
+                <span class="label-muted" style="font-size:11px;display:block">+0.5 L to goal</span>
+              </div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="workout-toggle">
+              <span class="tslider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Weekly bars -->
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">This Week</span>
+            <span class="label-muted small">liters / day</span>
+          </div>
+          <div id="week-bars" class="week-bars"></div>
+          <div class="week-labels" id="week-labels"></div>
+        </div>
+
+        <!-- Daily Insight -->
+        <div class="card insight-card" id="daily-insight-card">
+          <div class="insight-top">
+            <span class="insight-icon" id="insight-icon">💡</span>
+            <span class="insight-label">Today's Insight</span>
+          </div>
+          <p id="insight-text" class="insight-text">Loading your insight...</p>
+          <p id="insight-action" class="insight-action"></p>
+        </div>
+
+        <!-- Quote -->
+        <div class="card quote-card">
+          <div class="quote-bg-icon">"</div>
+          <p id="quote-txt" class="quote-text">Stay hydrated, stay sharp.</p>
+          <p id="quote-auth" class="quote-auth label-muted">— Oasis</p>
+        </div>
+
+        <!-- Achievements -->
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">Achievements</span>
+            <span class="chip" id="badge-chip">0 / 10</span>
+          </div>
+          <div id="badges-grid" class="badges-grid"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ PAGE: HYDRATION ░░ -->
+    <section id="page-water" class="page">
+      <div class="scroll-wrap">
+
+        <!-- Ring card -->
+        <div class="card ring-card">
+          <div class="ring-wrap">
+          <svg class="big-ring-svg" viewBox="0 0 240 240" width="200" height="200">
+            <defs>
+              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#0369a1"/>
+              </linearGradient>
+              <filter id="ringGlow">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="120" cy="120" r="100" class="big-ring-track"/>
+            <circle cx="120" cy="120" r="100" id="big-ring"
+              class="big-ring-prog"
+              stroke="url(#waterGrad)"
+              stroke-dasharray="628.32"
+              stroke-dashoffset="628.32"
+              stroke-linecap="round"
+              filter="url(#ringGlow)"
+              transform="rotate(-90 120 120)"/>
+          </svg>
+          <div class="big-ring-center">
+            <span id="ring-num" class="ring-big-num">0.0</span>
+            <span class="ring-unit" id="ring-unit-lbl">liters</span>
+            <span id="ring-pct" class="ring-pct-lbl">0%</span>
+          </div>
+          </div><!-- /ring-wrap -->
+          <div class="ring-footer">
+            <span class="label-muted">Goal: <strong id="goal-lbl">3.7 L</strong></span>
+            <button id="edit-goal-btn" class="text-btn"><i class="fa-solid fa-pen"></i> Edit</button>
+          </div>
+        </div>
+
+        <!-- Log drink -->
+        <div class="card">
+          <span class="card-title">Log Drink</span>
+          <div class="drink-type-row">
+            <button class="dtype active" data-drink="water" data-coeff="1.0">💧 Water</button>
+            <button class="dtype" data-drink="coffee" data-coeff="0.8">☕ Coffee</button>
+            <button class="dtype" data-drink="tea" data-coeff="0.9">🍵 Tea</button>
+            <button class="dtype" data-drink="juice" data-coeff="0.7">🧃 Juice</button>
+          </div>
+          <div class="amt-grid">
+            <button class="amt-btn" data-amount="0.25">250 ml</button>
+            <button class="amt-btn" data-amount="0.5">500 ml</button>
+            <button class="amt-btn" data-amount="0.75">750 ml</button>
+            <button class="amt-btn" data-amount="1.0">1.0 L</button>
+          </div>
+          <div class="custom-row">
+            <input id="custom-ml" type="number" class="text-input" placeholder="Custom amount (ml)" min="1" max="5000" step="10">
+            <button id="custom-btn" class="accent-btn">Log</button>
+          </div>
+          <div class="undo-row">
+            <button id="undo-btn" class="text-btn danger" disabled>
+              <i class="fa-solid fa-rotate-left"></i> Undo
+            </button>
+            <span id="undo-info" class="label-muted small"></span>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">Today's Log</span>
+            <button id="clear-today-btn" class="text-btn danger">Clear All</button>
+          </div>
+          <div id="timeline" class="timeline">
+            <div class="empty-msg">No drinks logged yet today.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ PAGE: SUPPLEMENTS ░░ -->
+    <section id="page-supps" class="page">
+      <div class="scroll-wrap">
+
+        <!-- Hero -->
+        <div class="card supp-hero-card">
+          <div class="supp-hdr">
+            <div>
+              <h2 class="supp-title">Creatine</h2>
+              <p id="supp-phase-lbl" class="label-muted small">Maintenance · 5g / day</p>
+            </div>
+            <div class="supp-ring-wrap">
+              <svg width="68" height="68" viewBox="0 0 68 68">
+                <defs>
+                  <linearGradient id="suppGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#c084fc"/>
+                    <stop offset="100%" stop-color="#7c3aed"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="34" cy="34" r="28" class="supp-ring-bg"/>
+                <circle cx="34" cy="34" r="28" id="supp-ring"
+                  class="supp-ring-fill"
+                  stroke="url(#suppGrad)"
+                  stroke-dasharray="175.93"
+                  stroke-dashoffset="175.93"
+                  stroke-linecap="round"
+                  transform="rotate(-90 34 34)"/>
+              </svg>
+              <span id="supp-ring-pct" class="supp-ring-num">0%</span>
+            </div>
+          </div>
+
+          <button id="creatine-btn" class="cta-btn">
+            <i class="fa-solid fa-circle-plus"></i>
+            <span id="cta-txt">Log 5g Serving</span>
+          </button>
+
+          <div class="supp-trio">
+            <div class="strio">
+              <span class="strio-val" id="c-servings">0</span>
+              <span class="strio-lbl">Servings</span>
+            </div>
+            <div class="strio">
+              <span class="strio-val" id="c-grams">0g</span>
+              <span class="strio-lbl">Total</span>
+            </div>
+            <div class="strio">
+              <span class="strio-val" id="c-timer">—</span>
+              <span class="strio-lbl">Last Dose</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading phase -->
+        <div class="card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-lbl">Loading Phase</div>
+              <p class="label-muted small">20g/day for 5–7 days to saturate faster</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="loading-toggle">
+              <span class="tslider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Creatine Saturation (Pro) -->
+        <div class="card pro-card">
+          <div class="pro-lock-overlay" data-feature="Creatine Saturation">
+            <span class="lock-ico">⚡</span>
+            <span class="lock-title">Creatine Saturation Gauge</span>
+            <span class="lock-desc">See exactly how saturated your muscles are &amp; projected peak date</span>
+            <button class="lock-btn">Unlock with Pro</button>
+          </div>
+          <div class="card-hdr"><span class="card-title">⚡ Saturation Gauge</span><span class="pro-chip">PRO</span></div>
+          <div class="pro-preview">
+            <div class="pp-row">
+              <span class="pp-label">Muscle Saturation</span>
+              <span class="pp-val pp-blur">██%</span>
+            </div>
+            <div class="pp-bar-wrap">
+              <div class="pp-bar pp-bar-purple pp-blur" style="width:68%"></div>
+            </div>
+            <div class="pp-row" style="margin-top:8px">
+              <span class="pp-label">Days to Peak</span><span class="pp-val pp-blur">█ days</span>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">Loading Needed</span><span class="pp-val pp-blur">██g more</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body Composition (Pro) -->
+        <div class="card pro-card">
+          <div class="pro-lock-overlay" data-feature="Body Composition">
+            <span class="lock-ico">🧪</span>
+            <span class="lock-title">Body Composition Calculator</span>
+            <span class="lock-desc">BMI, TDEE, daily protein target, macro breakdown &amp; recomp timeline</span>
+            <button class="lock-btn">Unlock with Pro</button>
+          </div>
+          <div class="card-hdr"><span class="card-title">🧪 Body Composition</span><span class="pro-chip">PRO</span></div>
+          <div class="pro-preview">
+            <div class="pp-grid-4">
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">██.█</span><span class="pp-tile-lbl">BMI</span></div>
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">████</span><span class="pp-tile-lbl">TDEE kcal</span></div>
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">███g</span><span class="pp-tile-lbl">Protein</span></div>
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">██%</span><span class="pp-tile-lbl">Body Fat est.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weight tracker -->
+        <div class="card">
+          <span class="card-title">Body Weight</span>
+          <div class="weight-input-row">
+            <input id="weight-log-input" type="number" class="text-input" placeholder="e.g. 82.5" min="30" max="300" step="0.1">
+            <select id="weight-unit-select" class="select-input">
+              <option value="kg">kg</option>
+              <option value="lbs">lbs</option>
+            </select>
+            <button id="log-weight-btn" class="accent-btn">Log</button>
+          </div>
+          <div id="weight-history" class="weight-history">
+            <p class="empty-msg">No weight logged yet.</p>
+          </div>
+        </div>
+
+        <!-- Dosage info -->
+        <div class="card">
+          <span class="card-title">Dosage Reference</span>
+          <div class="detail-row"><span class="dl">Serving Size</span><span class="dv" id="ref-serving">5g</span></div>
+          <div class="detail-row"><span class="dl">Daily Target</span><span class="dv" id="ref-daily">5g (1 serving)</span></div>
+          <div class="detail-row"><span class="dl">Max Safe</span><span class="dv">20g / day</span></div>
+          <div class="detail-row"><span class="dl">Best Taken</span><span class="dv">Post-workout</span></div>
+          <div class="detail-row"><span class="dl">With Meals</span><span class="dv">Yes (improves uptake)</span></div>
+          <p class="small-note">Consult your physician before starting any supplement regimen.</p>
+        </div>
+
+        <!-- Notes -->
+        <div class="card">
+          <span class="card-title">Session Notes</span>
+          <textarea id="supp-notes" class="notes-ta" placeholder="How do you feel today? Timing, brand, observations..."></textarea>
+          <button id="save-notes-btn" class="accent-btn full-w" style="margin-top:10px">Save Notes</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ PAGE: ANALYTICS ░░ -->
+    <section id="page-stats" class="page">
+      <div class="scroll-wrap">
+
+        <div class="stats-4">
+          <div class="s4tile">
+            <span class="s4val" id="s-avg">—</span>
+            <span class="s4lbl">Avg Daily L</span>
+          </div>
+          <div class="s4tile">
+            <span class="s4val" id="s-rate">—</span>
+            <span class="s4lbl">Goal Rate</span>
+          </div>
+          <div class="s4tile">
+            <span class="s4val" id="s-creatine">—</span>
+            <span class="s4lbl">Creatine %</span>
+          </div>
+          <div class="s4tile">
+            <span class="s4val" id="s-best">—</span>
+            <span class="s4lbl">Best Day</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">14-Day Hydration</span>
+            <span class="label-muted small">L / day</span>
+          </div>
+          <div class="chart-box">
+            <svg id="chart-water" viewBox="0 0 320 150" width="100%" height="150"></svg>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">14-Day Creatine</span>
+            <span class="label-muted small">servings / day</span>
+          </div>
+          <div class="chart-box">
+            <svg id="chart-creatine" viewBox="0 0 320 120" width="100%" height="120"></svg>
+          </div>
+        </div>
+
+        <!-- Caffeine tracker (Pro) -->
+        <div class="card pro-card" id="caffeine-card">
+          <div class="pro-lock-overlay" data-feature="Caffeine Tracker">
+            <span class="lock-ico">☕</span>
+            <span class="lock-title">Caffeine &amp; Energy Tracker</span>
+            <span class="lock-desc">Track caffeine half-life, crash windows &amp; creatine interactions</span>
+            <button class="lock-btn">Unlock with Pro</button>
+          </div>
+          <div class="card-hdr"><span class="card-title">☕ Caffeine Tracker</span><span class="pro-chip">PRO</span></div>
+          <div class="pro-preview">
+            <div class="pp-row">
+              <span class="pp-label">Caffeine in system</span>
+              <span class="pp-val pp-blur">███mg</span>
+            </div>
+            <div class="pp-bar-wrap" style="margin:6px 0">
+              <div class="pp-bar pp-blur" style="width:55%;background:var(--orange)"></div>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">Crash window</span><span class="pp-val pp-blur">█:██ PM</span>
+            </div>
+            <div class="pp-row">
+              <span class="pp-label">Creatine interaction</span><span class="pp-val pp-blur pp-warn">⚠ Space by 1hr</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sleep tracker (Pro) -->
+        <div class="card pro-card" id="sleep-card">
+          <div class="pro-lock-overlay" data-feature="Sleep Tracker">
+            <span class="lock-ico">😴</span>
+            <span class="lock-title">Sleep Quality Tracker</span>
+            <span class="lock-desc">Log sleep &amp; discover how it affects your hydration &amp; performance</span>
+            <button class="lock-btn">Unlock with Pro</button>
+          </div>
+          <div class="card-hdr"><span class="card-title">😴 Sleep Tracker</span><span class="pro-chip">PRO</span></div>
+          <div class="pro-preview">
+            <div class="pp-grid-3">
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">█.█h</span><span class="pp-tile-lbl">Last Night</span></div>
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">██%</span><span class="pp-tile-lbl">Quality</span></div>
+              <div class="pp-tile"><span class="pp-tile-val pp-blur">█.█h</span><span class="pp-tile-lbl">7-day avg</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hdr">
+            <span class="card-title">History</span>
+            <button id="export-btn" class="text-btn"><i class="fa-solid fa-download"></i> Export</button>
+          </div>
+          <div id="history-list" class="history-list">
+            <p class="empty-msg">No history yet. Start logging!</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ PAGE: SETTINGS ░░ -->
+    <section id="page-settings" class="page">
+      <div class="scroll-wrap">
+
+        <h3 class="section-hdg">Profile</h3>
+        <div class="card">
+          <div class="setting-row"><label class="setting-lbl">Name</label><input id="s-name" type="text" class="text-input" placeholder="Your name"></div>
+          <div class="setting-row" style="margin-top:12px"><label class="setting-lbl">Weight</label>
+            <div style="display:flex;gap:6px">
+              <input id="s-weight" type="number" class="text-input short" placeholder="70" min="30" max="300">
+              <select id="s-wunit" class="select-input"><option value="kg">kg</option><option value="lbs">lbs</option></select>
+            </div>
+          </div>
+          <div class="setting-row" style="margin-top:12px"><label class="setting-lbl">Activity</label>
+            <select id="s-activity" class="select-input">
+              <option value="sedentary">Sedentary</option>
+              <option value="light">Light</option>
+              <option value="moderate" selected>Moderate</option>
+              <option value="active">Very Active</option>
+              <option value="athlete">Athlete</option>
+            </select>
+          </div>
+          <button id="save-profile-btn" class="accent-btn full-w" style="margin-top:14px">Save Profile</button>
+          <div id="smart-goal-box" class="smart-box" style="display:none"></div>
+        </div>
+
+        <h3 class="section-hdg">AI Coach</h3>
+        <div class="card">
+          <div class="apikey-row">
+            <div class="apikey-icon">🤖</div>
+            <div>
+              <div class="setting-lbl">Anthropic API Key</div>
+              <p class="label-muted small">Stored locally, sent only to Anthropic</p>
+            </div>
+          </div>
+          <input id="s-api-key" type="password" class="text-input full-w" placeholder="sk-ant-..." style="margin-top:10px">
+          <div id="api-key-status" class="api-status"></div>
+          <button id="save-api-key-btn" class="accent-btn full-w" style="margin-top:10px">Save Key &amp; Enable AI</button>
+          <p class="label-muted small" style="margin-top:8px;line-height:1.5">Uses Claude Haiku (~$0.001 per chat). <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue)">Get a free key →</a></p>
+        </div>
+
+        <h3 class="section-hdg">Hydration Goal</h3>
+        <div class="card">
+          <div class="setting-row">
+            <label class="setting-lbl">Daily Goal (L)</label>
+            <input id="s-goal" type="number" class="text-input short" min="0.5" max="10" step="0.1" value="3.7">
+          </div>
+          <button id="save-goal-btn" class="accent-btn full-w" style="margin-top:14px">Update Goal</button>
+        </div>
+
+        <h3 class="section-hdg">Reminders</h3>
+        <div class="card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-lbl">Water Reminders</div>
+              <p class="label-muted small">Browser notifications to drink water</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="s-notifs">
+              <span class="tslider"></span>
+            </label>
+          </div>
+          <div class="setting-row" style="margin-top:12px">
+            <label class="setting-lbl">Every (hours)</label>
+            <select id="s-remind-interval" class="select-input">
+              <option value="1">1 hour</option>
+              <option value="2" selected>2 hours</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 class="section-hdg">Appearance</h3>
+        <div class="card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-lbl">Dark Mode</div>
+              <p class="label-muted small">Rich dark interface</p>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="s-dark" checked>
+              <span class="tslider"></span>
+            </label>
+          </div>
+          <div class="setting-row" style="margin-top:12px">
+            <label class="setting-lbl">Units</label>
+            <select id="s-units" class="select-input">
+              <option value="metric">Metric (L / kg)</option>
+              <option value="imperial">Imperial (fl oz / lbs)</option>
+            </select>
+          </div>
+        </div>
+
+        <h3 class="section-hdg">Data</h3>
+        <div class="card">
+          <button id="export-data-btn" class="accent-btn full-w" style="margin-bottom:10px">
+            <i class="fa-solid fa-file-arrow-down"></i> Export All Data (JSON)
+          </button>
+          <button id="clear-data-btn" class="danger-btn full-w">
+            <i class="fa-solid fa-trash-can"></i> Clear All Data
+          </button>
+        </div>
+
+        <p class="version-txt label-muted">Oasis v2.0 · Made with 💙</p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottom-nav">
+    <button class="nb active" data-page="page-home"><i class="fa-solid fa-house"></i><span>Home</span></button>
+    <button class="nb" data-page="page-water"><i class="fa-solid fa-droplet"></i><span>Water</span></button>
+    <button class="nb" data-page="page-supps"><i class="fa-solid fa-pills"></i><span>Supps</span></button>
+    <button class="nb" data-page="page-stats"><i class="fa-solid fa-chart-column"></i><span>Stats</span></button>
+    <button class="nb" data-page="page-settings"><i class="fa-solid fa-gear"></i><span>Settings</span></button>
+  </nav>
+
+  <!-- AI COACH BUTTON -->
+  <button id="coach-fab" class="coach-fab" title="AI Health Coach">
+    <i class="fa-solid fa-brain"></i>
+    <span class="fab-label">AI Coach</span>
+    <span class="pro-badge-fab">PRO</span>
+  </button>
+
+  <!-- AI COACH PANEL -->
+  <div id="coach-panel" class="coach-panel hidden">
+    <div class="cp-header">
+      <div class="cp-avatar">🤖</div>
+      <div><div class="cp-title">Oasis AI Coach</div><div class="cp-sub label-muted small">Personalized health insights</div></div>
+      <button id="coach-close" class="text-btn" style="margin-left:auto"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="coach-messages" class="cp-messages"></div>
+    <div class="cp-actions">
+      <button class="cp-action-btn" data-topic="hydration">💧 Hydration</button>
+      <button class="cp-action-btn" data-topic="creatine">💊 Creatine</button>
+      <button class="cp-action-btn" data-topic="body">🏋️ Body Comp</button>
+      <button class="cp-action-btn" data-topic="plan">📋 Today's Plan</button>
+      <button class="cp-action-btn" data-topic="motivation">🔥 Motivate Me</button>
+    </div>
+    <div class="cp-input-row">
+      <input id="coach-input" type="text" class="coach-input" placeholder="Ask anything about your health...">
+      <button id="coach-send" class="coach-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- UPGRADE MODAL -->
+  <div id="upgrade-modal" class="modal-overlay hidden">
+    <div class="modal-box upgrade-box">
+      <div class="upgrade-crown">👑</div>
+      <h3 class="upgrade-title">Upgrade to Oasis Pro</h3>
+      <p class="label-muted small" style="text-align:center;margin-bottom:18px">Unlock your full health potential</p>
+      <div class="upgrade-features">
+        <div class="uf">🤖 AI Health Coach with personalized insights</div>
+        <div class="uf">🧪 Body Composition Calculator</div>
+        <div class="uf">☕ Caffeine & Energy Tracker</div>
+        <div class="uf">😴 Sleep Quality Tracker</div>
+        <div class="uf">⚡ Creatine Saturation Gauge</div>
+        <div class="uf">📊 30-Day Advanced Analytics</div>
+        <div class="uf">🎨 Custom Themes & Colors</div>
+        <div class="uf">📤 CSV & PDF Export</div>
+      </div>
+      <div class="upgrade-plans">
+        <div class="plan-card plan-monthly" id="plan-monthly">
+          <div class="plan-period">Monthly</div>
+          <div class="plan-price">$4.99<span>/mo</span></div>
+        </div>
+        <div class="plan-card plan-yearly active-plan" id="plan-yearly">
+          <div class="plan-badge">BEST VALUE</div>
+          <div class="plan-period">Yearly</div>
+          <div class="plan-price">$39.99<span>/yr</span></div>
+          <div class="plan-save">Save 33%</div>
+        </div>
+      </div>
+      <button id="upgrade-btn" class="upgrade-cta">Start 7-Day Free Trial</button>
+      <button id="upgrade-cancel" class="text-btn" style="display:block;text-align:center;margin-top:10px;width:100%">Maybe later</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toasts"></div>
+
+  <!-- GOAL MODAL -->
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <h3 class="modal-title">Set Daily Water Goal</h3>
+      <p class="label-muted small" style="margin-bottom:14px">How many liters per day?</p>
+      <input id="modal-inp" type="number" class="modal-input" min="0.5" max="10" step="0.1" placeholder="3.7">
+      <div class="modal-row">
+        <button id="modal-cancel" class="modal-btn secondary">Cancel</button>
+        <button id="modal-save" class="modal-btn primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFETTI -->
+  <canvas id="confetti"></canvas>
+
+</div>
+<script src="scripts.js" defer></script>
 </body>
 </html>
